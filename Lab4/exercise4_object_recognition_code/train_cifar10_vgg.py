@@ -24,9 +24,9 @@ parser.add_argument("--root", default='data/data_cnn/cifar-10-batches-py', type=
 args = parser.parse_args()
 ###################################
 
-
+device = torch.device("cuda")
 # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-device = torch.device("cpu")
+# device = torch.device("cpu")
 
 
 
@@ -59,7 +59,9 @@ def train(writer, logger):
             label = data[1].to(device)  # [batch_size]
             optimizer.zero_grad()
             preds = model(imgs)
-
+            preds = preds.to(device)
+            # print(preds.is_cuda)
+            # print(label.is_cuda)
             loss = F.cross_entropy(input=preds, target=label, reduction='mean')
             loss.backward()  # backpropagation loss
             optimizer.step()
@@ -80,6 +82,7 @@ def train(writer, logger):
                         imgs = data[0].to(device)
                         labels = data[1].to(device)
                         preds = model(imgs)
+                        preds = preds.to(device)
 
                         _, predicted = preds.max(1)
                         total += labels.size(0)

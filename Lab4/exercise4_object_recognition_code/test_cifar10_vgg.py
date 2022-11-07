@@ -12,7 +12,7 @@ parser.add_argument("--batch_size", default=128, type=int)
 
 parser.add_argument("--fc_layer", default=512, type=int)
 
-parser.add_argument("--model_path", default='runs/48557/last_model.pkl', type=str)
+parser.add_argument("--model_path", default='runs/22457/last_model.pkl', type=str)
 parser.add_argument("--root", default='data/data_cnn/cifar-10-batches-py', type=str, help='path to dataset folder')
 args = parser.parse_args()
 ###################################
@@ -41,6 +41,7 @@ def test(args):
             imgs = data[0].to(device)  # [batch_size, 3, 32, 32]
             labels = data[1].to(device)  # [batch_size]
             preds = model(imgs)
+            preds = preds.to(device)
 
             _, predicted = preds.max(1)
             total += labels.size(0)
