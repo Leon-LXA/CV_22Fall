@@ -1,0 +1,5 @@
+scipy
+tensorboardX
+tensorboard
+torch
+TensorFlow
